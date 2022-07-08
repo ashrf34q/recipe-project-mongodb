@@ -1,11 +1,14 @@
 package com.springframework.recipeproject.domain;
 
+import java.util.Set;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 @Entity
@@ -23,6 +26,9 @@ public class Recipe {
 	private String url;
 	private String directions;
 //	private Difficulty diffuclty;
+	
+	@OneToMany(cascade = CascadeType.ALL)
+	private Set<Ingredients> ingredients;
 	
 	@Lob
 	private Byte[] image;
@@ -90,5 +96,13 @@ public class Recipe {
 	public void setNotes(Notes notes) {
 		this.notes = notes;
 	}
+	public Set<Ingredients> getIngredients() {
+		return ingredients;
+	}
+	public void setIngredients(Set<Ingredients> ingredients) {
+		this.ingredients = ingredients;
+	}
+	
+	
 
 }
