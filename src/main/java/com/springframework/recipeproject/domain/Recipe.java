@@ -1,5 +1,6 @@
 package com.springframework.recipeproject.domain;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -29,11 +30,12 @@ public class Recipe {
 	private int servings;
 	private String source;
 	private String url;
+
+	@Lob
 	private String directions;
 
-	
 	@OneToMany(cascade = CascadeType.ALL)
-	private Set<Ingredients> ingredients;
+	private Set<Ingredients> ingredients = new HashSet<>();
 	
 	@Lob
 	private Byte[] image;
@@ -48,7 +50,7 @@ public class Recipe {
 	@JoinTable(name = "recipe_category",
 		joinColumns = @JoinColumn(name = "recipe_id"),
 	    inverseJoinColumns = @JoinColumn(name = "category_id"))
-	private Set<Category> categories;
+	private Set<Category> categories = new HashSet<>();
 	
 	public Long getId() {
 		return id;
