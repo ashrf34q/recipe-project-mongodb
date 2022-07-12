@@ -121,7 +121,7 @@ public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEve
 	        guacRecipe.getIngredients().add(new Ingredients("minced red onion or thinly sliced green onion", new BigDecimal(2), tableSpoonUom, guacRecipe));
 	        guacRecipe.getIngredients().add(new Ingredients("serrano chiles, stems and seeds removed, minced", new BigDecimal(2), eachUom, guacRecipe));
 	        guacRecipe.getIngredients().add(new Ingredients("Cilantro", new BigDecimal(2), tableSpoonUom, guacRecipe));
-	        guacRecipe.getIngredients().add(new Ingredients("freshly grated black pepper", new BigDecimal(2), dashUom, guacRecipe));
+	        guacRecipe.getIngredients().add(new Ingredients("freshly grated black pepper", new BigDecimal(2), pinchUom, guacRecipe));
 	        guacRecipe.getIngredients().add(new Ingredients("ripe tomato, seeds and pulp removed, chopped", new BigDecimal(".5"), eachUom, guacRecipe));
 	        
 	        guacRecipe.getCategories().add(mexican);
