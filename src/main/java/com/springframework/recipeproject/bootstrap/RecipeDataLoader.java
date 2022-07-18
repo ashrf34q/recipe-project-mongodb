@@ -8,6 +8,7 @@ import java.util.Optional;
 import org.springframework.context.ApplicationListener;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.springframework.recipeproject.domain.Category;
 import com.springframework.recipeproject.domain.Difficulty;
@@ -38,9 +39,10 @@ public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEve
 	
 
 	@Override
+	@Transactional
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		recipeRepository.saveAll(getRecipes());
-		log.debug("I'm in the dataloader");
+		log.debug("Loading data");
 	}
 	
 	private List<Recipe> getRecipes(){
