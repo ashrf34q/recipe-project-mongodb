@@ -19,7 +19,9 @@ import com.springframework.recipeproject.repositories.CategoryRepository;
 import com.springframework.recipeproject.repositories.RecipeRepository;
 import com.springframework.recipeproject.repositories.UnitOfMeasureRepository;
 
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 @Component
 public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEvent>{
 
@@ -38,6 +40,7 @@ public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEve
 	@Override
 	public void onApplicationEvent(ContextRefreshedEvent event) {
 		recipeRepository.saveAll(getRecipes());
+		log.debug("I'm in the dataloader");
 	}
 	
 	private List<Recipe> getRecipes(){
