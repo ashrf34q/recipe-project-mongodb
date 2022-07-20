@@ -23,14 +23,14 @@ public class CategoryTest {
 		assertEquals(idValue, category.getId());
 	}
 	
-//	@Test
-//	public void getdescription() throws Exception {
-//		
-//	}
-//	
-//	@Test
-//	public void getRecipes() throws Exception {
-//		
-//	}
+	@Test
+	public void getdescription() throws Exception {
+		
+	}
+	
+	@Test
+	public void getRecipes() throws Exception {
+		
+	}
 
 }

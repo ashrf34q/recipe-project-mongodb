@@ -67,8 +67,10 @@ public class IndexControllerTest {
 		@SuppressWarnings("unchecked")
 		ArgumentCaptor<Set<Recipe>> argumentCaptor = ArgumentCaptor.forClass(Set.class);
 		
+		//when
 		String view = controller.getIndexPage(model);
 		
+		//then
 		assertEquals("index", view);
 		verify(model, times(1)).addAttribute(eq("recipes"), argumentCaptor.capture());	
 		verify(recipeService, times(1)).getRecipes();
