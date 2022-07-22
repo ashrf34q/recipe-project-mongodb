@@ -1,25 +1,26 @@
 package com.springframework.recipeproject.controllers;
 
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.ui.Model;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.view;
 
 import com.springframework.recipeproject.domain.Recipe;
 import com.springframework.recipeproject.services.RecipeService;
@@ -34,7 +35,7 @@ public class IndexControllerTest {
 	
 	IndexController controller;
 	
-	@Before
+	@BeforeEach
 	public void setUp() throws Exception{
 		MockitoAnnotations.openMocks(this);
 		
@@ -53,7 +54,7 @@ public class IndexControllerTest {
 	
 	
 	@Test
-	public void testGetIndexPage() {
+	public void testGetIndexPage() throws Exception {
 		
 		Set<Recipe> recipes = new HashSet<>();
 		recipes.add(new Recipe());

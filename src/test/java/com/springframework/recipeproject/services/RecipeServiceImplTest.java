@@ -1,6 +1,7 @@
 package com.springframework.recipeproject.services;
 
-import static org.junit.Assert.assertEquals;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -8,8 +9,9 @@ import static org.mockito.Mockito.when;
 import java.util.HashSet;
 import java.util.Set;
 
-import org.junit.Before;
-import org.junit.Test;
+
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -23,7 +25,7 @@ public class RecipeServiceImplTest {
 	 @Mock
 	 RecipeRepository recipeRepository;
 	 
-	 @Before
+	 @BeforeEach
 	 public void setUp() throws Exception{
 		MockitoAnnotations.openMocks(this);
 		
