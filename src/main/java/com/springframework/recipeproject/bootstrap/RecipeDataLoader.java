@@ -106,7 +106,7 @@ public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEve
                 "Chilling tomatoes hurts their flavor, so if you want to add chopped tomato to your guacamole, add it just before serving.\n" +
                 "\n" +
                 "\n" +
-                "Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvpiV9Sd");
+                "Read more: https://www.simplyrecipes.com/recipes/perfect_guacamole/");
 	        
 	        Notes guacaNotes = new Notes();
 	        guacaNotes.setRecipe(guacRecipe);
@@ -116,7 +116,7 @@ public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEve
 	                "To extend a limited supply of avocados, add either sour cream or cottage cheese to your guacamole dip. Purists may be horrified, but so what? It tastes great.\n" +
 	                "\n" +
 	                "\n" +
-	                "Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvoun5ws");
+	                "Read more: https://www.simplyrecipes.com/recipes/perfect_guacamole/");
 	        guacRecipe.setNotes(guacaNotes);
 	        
 
@@ -131,6 +131,11 @@ public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEve
 	        
 	        guacRecipe.getCategories().add(mexican);
 	        guacRecipe.getCategories().add(american);
+	        
+	        guacRecipe.setUrl("https://www.simplyrecipes.com/recipes/perfect_guacamole/");
+	        guacRecipe.setServings(4);
+	        guacRecipe.setSource("https://www.simplyrecipes.com/");
+	        
 	        
 	        //add the recipe to our list
 	        recipes.add(guacRecipe);
@@ -154,7 +159,7 @@ public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEve
 	                "5 Assemble the tacos: Slice the chicken into strips. On each tortilla, place a small handful of arugula. Top with chicken slices, sliced avocado, radishes, tomatoes, and onion slices. Drizzle with the thinned sour cream. Serve with lime wedges.\n" +
 	                "\n" +
 	                "\n" +
-	                "Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz4jvtrAnNm");
+	                "Read more: https://www.simplyrecipes.com/");
 
 	        Notes tacoNotes = new Notes();
 	        tacoNotes.setRecipeNotes("We have a family motto and it is this: Everything goes better in a tortilla.\n" +
@@ -164,7 +169,7 @@ public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEve
 	                "Grill the chicken, then let it rest while you warm the tortillas. Now you are ready to assemble the tacos and dig in. The whole meal comes together in about 30 minutes!\n" +
 	                "\n" +
 	                "\n" +
-	                "Read more: http://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/#ixzz4jvu7Q0MJ");
+	                "Read more: https://www.simplyrecipes.com/");
 	        tacoNotes.setRecipe(tacosRecipe);
 	        tacosRecipe.setNotes(tacoNotes);
 
@@ -191,6 +196,10 @@ public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEve
 
 	        tacosRecipe.getCategories().add(american);
 	        tacosRecipe.getCategories().add(mexican);
+	        
+	        tacosRecipe.setUrl("https://www.simplyrecipes.com/recipes/spicy_grilled_chicken_tacos/");
+	        tacosRecipe.setServings(5);
+	        tacosRecipe.setSource("https://www.simplyrecipes.com/");
 
 	        recipes.add(tacosRecipe);
 	        

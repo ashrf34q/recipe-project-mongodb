@@ -23,9 +23,7 @@
                             </div>
                             <div class="col-md-9">
                                 <ul>
-                                    <li>cat one</li>
-                                    <li>cat two</li>
-                                    <li>cat three</li>
+                                    <li th:each="category : ${recipe.categories}" th:text="${category.getDescription()}">cat three</li>
                                 </ul>
                             </div>
                         </div>
@@ -34,13 +32,13 @@
                                 <h5>Prep Time:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>30 min</p>
+                                <p th:text="${recipe.prepTime} + ' min'">30 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Difficulty:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>Easy</p>
+                                <p th:text="${recipe.difficulty}">Easy</p>
                             </div>
                         </div>
                         <div class="row">
@@ -48,13 +46,13 @@
                                 <h5>Cooktime:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>30 min</p>
+                                <p th:text="${recipe.cookTime} + ' min' ">30 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>Servings:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>4</p>
+                                <p th:text="${recipe.servings}">4</p>
                             </div>
                         </div>
                         <div class="row">
@@ -62,13 +60,13 @@
                                 <h5>Source:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>30 min</p>
+                                <p th:text="${recipe.source} + ' min'">30 min</p>
                             </div>
                             <div class="col-md-3">
                                 <h5>URL:</h5>
                             </div>
                             <div class="col-md-3">
-                                <p>http://www.example.com</p>
+                                <p th:text="${recipe.url}">http://www.example.com</p>
                             </div>
                         </div>
                     </div>
@@ -81,9 +79,9 @@
                         <div class="row">
                             <div class="col-md-12">
                                 <ul>
-                                    <li>1 Cup of milk</li>
-                                    <li>1 Teaspoon of chocolate</li>
-                                    <li>1 Teaspoon of Sugar</li>
+                                    <li th:each="ingredient : ${recipe.ingredients}" 
+                                    th:text="${ingredient.getAmount() + ' ' + ingredient.uom.getDescription() + ' - '
+                                    + ingredient.getDescription()}">1 Teaspoon of Sugar</li>
                                 </ul>
                             </div>
                         </div>
@@ -96,7 +94,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-								<!-- Needs change later -->
+								<p th:text="${recipe.getDirections()}">The recipe directions</p>
                             </div>
                         </div>
                     </div>
@@ -108,7 +106,7 @@
                     <div class="panel-body">
                         <div class="row">
                             <div class="col-md-12">
-								<!-- needs change later -->
+								<p th:text="${recipe.getNotes().getRecipeNotes()}">The recipe notes</p>
                             </div>
                         </div>
                     </div>
