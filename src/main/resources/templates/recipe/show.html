@@ -80,8 +80,8 @@
                             <div class="col-md-12">
                                 <ul>
                                     <li th:each="ingredient : ${recipe.ingredients}" 
-                                    th:text="${ingredient.getAmount() + ' ' + ingredient.uom.getDescription() + ' - '
-                                    + ingredient.getDescription()}">1 Teaspoon of Sugar</li>
+                                    th:text="${(ingredient.getAmount() + ' ' + ingredient.uom.getDescription() + ' - '
+                                    + ingredient.getDescription())}">1 Teaspoon of Sugar</li>
                                 </ul>
                             </div>
                         </div>

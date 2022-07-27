@@ -10,8 +10,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 public class IngredientsCommand {
-	 private Long id;
+	 	private Long id;
 	    private String description;
 	    private BigDecimal amount;
-	    private UoMCommand unitOfMeasure;
+	    private UoMCommand uom;
 }
