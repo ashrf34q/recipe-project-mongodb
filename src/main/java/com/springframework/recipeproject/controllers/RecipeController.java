@@ -31,7 +31,7 @@ public class RecipeController {
 		model.addAttribute("recipe", recipeService.findById(Long.parseLong(id)));
 		
 		return "recipe/show";
-	}
+	}//end getRecipe
 	
 	@GetMapping
 	@RequestMapping("/recipe/new")
@@ -39,7 +39,7 @@ public class RecipeController {
 		model.addAttribute("recipe", new RecipeCommand());
 		
 		return "recipe/recipeForm";
-	}
+	}//end new Recipe
 	
 	@GetMapping
 	@RequestMapping("/recipe/{id}/update")
@@ -47,7 +47,7 @@ public class RecipeController {
 		model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
 		
 		return "recipe/recipeForm";
-	}
+	}//end updateRecipe
 	
 	@PostMapping
 	@RequestMapping("recipe")
@@ -55,7 +55,7 @@ public class RecipeController {
 		RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipeCommand);
 		
 		return "redirect:/recipe/" + savedCommand.getId() + "/show" ;
-	}
+	}//end saveRecipe
 	
 	@GetMapping
 	@RequestMapping("/recipe/{id}/delete")
@@ -66,6 +66,6 @@ public class RecipeController {
 		
 		return "redirect:/";
 		
-	}
+	}//end deleteRecipe
 
 }
