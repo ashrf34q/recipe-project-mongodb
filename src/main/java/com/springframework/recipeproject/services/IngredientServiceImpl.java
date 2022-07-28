@@ -41,4 +41,10 @@ public class IngredientServiceImpl implements IngredientService {
 		return ingredientCmdOpt.get();
 		
 	}
+
+	@Override
+	public IngredientsCommand saveIngredientCommand(IngredientsCommand command) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
