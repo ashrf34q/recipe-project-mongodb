@@ -49,7 +49,7 @@ public class IngredientControllerTest {
 		MockitoAnnotations.openMocks(this);
 		
 		recipeCommand = new RecipeCommand();
-		controller = new IngredientController(recipeService, ingredientService);
+		controller = new IngredientController(recipeService, ingredientService, uoMService);
 		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
 	}
 

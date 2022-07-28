@@ -3,11 +3,15 @@ package com.springframework.recipeproject.services;
 import java.util.Optional;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.springframework.recipeproject.commands.IngredientsCommand;
+import com.springframework.recipeproject.converters.IngredientCmdToIngredient;
 import com.springframework.recipeproject.converters.IngredientToIngredientCmd;
+import com.springframework.recipeproject.domain.Ingredients;
 import com.springframework.recipeproject.domain.Recipe;
 import com.springframework.recipeproject.repositories.RecipeRepository;
+import com.springframework.recipeproject.repositories.UnitOfMeasureRepository;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -16,11 +20,15 @@ import lombok.extern.slf4j.Slf4j;
 public class IngredientServiceImpl implements IngredientService {
 	
 	private final RecipeRepository recipeRepository;
+	private final UnitOfMeasureRepository uomRepo;
 	private final IngredientToIngredientCmd ingrToIngrCmd;
+	private final IngredientCmdToIngredient ingrCmdToIngr;
 
-	public IngredientServiceImpl(RecipeRepository recipeRepository, IngredientToIngredientCmd ingrToIngrCmd) {
+	public IngredientServiceImpl(RecipeRepository recipeRepository, IngredientToIngredientCmd ingrToIngrCmd, UnitOfMeasureRepository uomRepo, IngredientCmdToIngredient ingrCmdToIngr) {
 		this.recipeRepository = recipeRepository;
+		this.uomRepo = uomRepo;
 		this.ingrToIngrCmd = ingrToIngrCmd;
+		this.ingrCmdToIngr = ingrCmdToIngr;
 	}
 
 	@Override
@@ -42,9 +50,49 @@ public class IngredientServiceImpl implements IngredientService {
 		
 	}
 
+	@Transactional
 	@Override
 	public IngredientsCommand saveIngredientCommand(IngredientsCommand command) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		Optional<Recipe> recipeOpt = recipeRepository.findById(command.getRecipeId());
+		
+		if(!recipeOpt.isPresent()) { //check if recipe is in the repo
+			log.error("Recipe " + command.getRecipeId() + " not found!");
+			return new IngredientsCommand();
+		}
+		else { //recipe was found in the repo
+			Recipe recipe = recipeOpt.get();
+			
+			//extract the ingredient we want to update
+			Optional<Ingredients> ingredientOpt = recipe
+					.getIngredients()
+					.stream()
+					.filter(ingredient -> ingredient.getId().equals(command.getId()))
+					.findFirst();
+			
+			//Check if that ingredient is in the recipe 
+			if(ingredientOpt.isPresent()) {
+				//if present, just update it
+				
+				Ingredients ingredientFound = ingredientOpt.get();
+				ingredientFound.setDescription(command.getDescription());
+				ingredientFound.setUom(uomRepo.findById(command.getUom().getId())
+						.orElseThrow(() -> new RuntimeException("UOM NOT FOUND")));
+				ingredientFound.setAmount(command.getAmount());
+			}
+			else {	
+				//if ingredient not present, create a new ingredient with ingredient command properties and add it to recipe object
+				recipe.addIngredient(ingrCmdToIngr.convert(command));
+			}
+			
+			//save recipe to repo
+			Recipe savedRecipe = recipeRepository.save(recipe);
+			
+			//return ingredient command after being saved to the repo
+			return(ingrToIngrCmd.convert(savedRecipe.getIngredients().stream()
+					.filter(ingredients -> ingredients.getId().equals(command.getId()))
+					.findFirst()
+					.get()));
+		}
+		
+	} //end saveIngredientCmd
 }
