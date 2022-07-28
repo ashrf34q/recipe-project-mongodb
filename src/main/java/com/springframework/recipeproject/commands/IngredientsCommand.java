@@ -11,6 +11,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class IngredientsCommand {
 	 	private Long id;
+	 	private Long recipeId;
 	    private String description;
 	    private BigDecimal amount;
 	    private UoMCommand uom;
