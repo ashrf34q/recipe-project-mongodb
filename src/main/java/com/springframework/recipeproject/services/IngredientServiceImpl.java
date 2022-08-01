@@ -88,10 +88,21 @@ public class IngredientServiceImpl implements IngredientService {
 			Recipe savedRecipe = recipeRepository.save(recipe);
 			
 			//return ingredient command after being saved to the repo
-			return(ingrToIngrCmd.convert(savedRecipe.getIngredients().stream()
+			Optional<Ingredients> savedIngrOpt = savedRecipe.getIngredients().stream()
 					.filter(ingredients -> ingredients.getId().equals(command.getId()))
-					.findFirst()
-					.get()));
+					.findFirst();
+			
+			//checking in case id wasn't saved when we saved ingredient to our recipe
+			
+			if(!savedIngrOpt.isPresent()) {
+				savedIngrOpt = savedRecipe.getIngredients().stream()
+						.filter(ingredients -> ingredients.getAmount().equals(command.getAmount()))
+						.filter(ingredients -> ingredients.getDescription().equals(command.getDescription()))
+						.filter(ingredients -> ingredients.getUom().getId().equals(command.getUom().getId()))
+						.findFirst();
+			}
+			
+			return ingrToIngrCmd.convert(savedIngrOpt.get());
 		}
 		
 	} //end saveIngredientCmd

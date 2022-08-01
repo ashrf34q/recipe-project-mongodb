@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.springframework.recipeproject.commands.IngredientsCommand;
+import com.springframework.recipeproject.commands.RecipeCommand;
 import com.springframework.recipeproject.services.IngredientService;
 import com.springframework.recipeproject.services.RecipeService;
 import com.springframework.recipeproject.services.UoMService;
@@ -62,6 +63,22 @@ public class IngredientController {
 	}
 	
 	
+	@RequestMapping("/recipe/{recipeId}/ingredient/new")
+	public String newRecipe(@PathVariable String recipeId, Model model) {
+		
+		RecipeCommand recipeCmd = recipeService.findCommandById(Long.valueOf(recipeId));
+		
+		IngredientsCommand ingredientCmd = new IngredientsCommand();
+		ingredientCmd.setRecipeId(recipeCmd.getId());
+		
+		model.addAttribute("ingredient", ingredientCmd);
+		
+		model.addAttribute("uomList", uomService.listAllUoms());
+		
+		return "recipe/ingredient/ingredientForm";
+	} //end newRecipe
+	
+	
 	@PostMapping
 	@RequestMapping("/recipe/{recipeId}/ingredient")
 	public String saveOrUpdate(@ModelAttribute IngredientsCommand command) {
@@ -71,5 +88,5 @@ public class IngredientController {
 		log.debug("Saved Ingredient " + savedCmd.getId());
 		
 		return "redirect:/recipe/" + savedCmd.getRecipeId() + "/ingredient/" + savedCmd.getId() + "/show";
-	}
+	} //end saveOrUpdate
 }
