@@ -45,9 +45,11 @@ public class RecipeController {
 		return "recipe/recipeForm";
 	}//end updateRecipe
 	
-	@PostMapping("recipe")
-	public String saveRecipe(@ModelAttribute RecipeCommand recipeCommand) { //now recipeCommand is our model attribute for view
-		RecipeCommand savedCommand = recipeService.saveRecipeCommand(recipeCommand);
+	@PostMapping("/recipe")
+	public String saveRecipe(@ModelAttribute RecipeCommand command) { //now recipeCommand is our model attribute for view
+		RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
+		
+		log.debug("I'm calling the fucking controller!");
 		
 		return "redirect:/recipe/" + savedCommand.getId() + "/show" ;
 	}//end saveRecipe
