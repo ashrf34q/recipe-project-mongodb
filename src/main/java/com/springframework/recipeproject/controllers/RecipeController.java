@@ -47,6 +47,7 @@ public class RecipeController {
 	
 	@PostMapping("/recipe")
 	public String saveRecipe(@ModelAttribute RecipeCommand command) { //now recipeCommand is our model attribute for view
+		
 		RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
 		
 		log.debug("I'm calling the fucking controller!");
