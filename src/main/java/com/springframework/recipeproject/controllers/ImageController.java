@@ -1,5 +1,12 @@
 package com.springframework.recipeproject.controllers;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -8,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.springframework.recipeproject.commands.RecipeCommand;
 import com.springframework.recipeproject.services.ImageService;
 import com.springframework.recipeproject.services.RecipeService;
 
@@ -37,4 +45,25 @@ public class ImageController {
 
         return "redirect:/recipe/" + id + "/show";
     }
+    
+    @GetMapping("/recipe/{id}/recipeImage")
+    public void renderImageFromDB(@PathVariable String id, HttpServletResponse response) throws IOException {
+    	RecipeCommand command = recipeService.findCommandById(Long.valueOf(id));
+    	
+    	if(command.getImage() != null) {
+    		
+    		byte[] array = new byte[command.getImage().length];
+    	
+    		int i = 0; 
+    		for(Byte wrappdByte : command.getImage()) {
+    		array[i++] = wrappdByte;
+    		
+    		}
+    	
+    		response.setContentType("image/jpeg");
+    		InputStream is = new ByteArrayInputStream(array);
+    		IOUtils.copy(is, response.getOutputStream());
+    	}
+    	
+    } //end renderImage
 }
