@@ -26,50 +26,53 @@ import com.springframework.recipeproject.services.RecipeService;
 
 public class ImageControllerTest {
 	
-	@Mock
-	ImageService imageService;
-	
-	@Mock
-	RecipeService recipeService;
-	
-	ImageController controller;
-	
-	MockMvc mockMvc;
-	
-	@BeforeEach
-	public void setUp() throws Exception {
-		MockitoAnnotations.openMocks(this);
-		
-		controller = new ImageController(imageService, recipeService);
-		mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
-	}
-	
-	@Test
-	public void uploadImageTest() throws Exception {
-		//given
-		RecipeCommand command = new RecipeCommand();
-		command.setId(1L);
-		
-		when(recipeService.findCommandById(anyLong())).thenReturn(command);
-		
-		mockMvc.perform(get("/recipe/1/image"))
-		.andExpect(status().isOk())
-		.andExpect(model().attributeExists("recipe"))
-		.andExpect(view().name("recipe/imageUploadForm"));
-	}
-	
-	
-	@Test
-	public void handleImagePost() throws Exception {
-		MockMultipartFile multiPartFile = 
-						new MockMultipartFile("imageFile", "testing.txt", "text/plain", "Spring Framework Guru".getBytes());
-		
-		mockMvc.perform(multipart("/recipe/1/image").file(multiPartFile))
-		.andExpect(status().is3xxRedirection())
-		.andExpect(header().string("Location", "/recipe/1/show"));
-		
-		verify(imageService, times(1)).saveImageFile(anyLong(), any());
-		
-	}
+    @Mock
+    ImageService imageService;
+
+    @Mock
+    RecipeService recipeService;
+
+    ImageController controller;
+
+    MockMvc mockMvc;
+
+    @BeforeEach
+    public void setUp() throws Exception {
+        MockitoAnnotations.openMocks(this);
+
+        controller = new ImageController(imageService, recipeService);
+        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+    }
+
+    @Test
+    public void uploadImageTest() throws Exception {
+        //given
+        RecipeCommand command = new RecipeCommand();
+        command.setId(1L);
+
+        when(recipeService.findCommandById(anyLong())).thenReturn(command);
+
+        //when
+        mockMvc.perform(get("/recipe/1/image"))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeExists("recipe"));
+
+        verify(recipeService, times(1)).findCommandById(anyLong());
+
+    }
+
+    @Test
+    public void handleImagePost() throws Exception {
+        MockMultipartFile multiPartFile =
+                new MockMultipartFile("imagefile", "testing.txt", "text/plain",
+                        "Spring Framework Guru".getBytes());
+
+        mockMvc.perform(multipart("/recipe/1/image").file(multiPartFile))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(header().string("Location", "/recipe/1/show"))
+                .andExpect(view().name("redirect:/recipe/1/show"));
+
+        verify(imageService, times(1)).saveImageFile(anyLong(), any());
+    }
 
 }

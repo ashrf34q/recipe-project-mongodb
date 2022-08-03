@@ -11,9 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.springframework.recipeproject.services.ImageService;
 import com.springframework.recipeproject.services.RecipeService;
 
-import lombok.extern.slf4j.Slf4j;
 
-@Slf4j
 @Controller
 public class ImageController {
 
