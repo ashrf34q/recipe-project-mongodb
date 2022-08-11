@@ -1,13 +1,18 @@
 package com.springframework.recipeproject.controllers;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.springframework.recipeproject.commands.RecipeCommand;
+import com.springframework.recipeproject.exceptions.NotFoundException;
 import com.springframework.recipeproject.services.RecipeService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,8 +29,7 @@ public class RecipeController {
 
 	@GetMapping("/recipe/{id}/show")
 	public String getRecipe(@PathVariable Long id, Model model){
-		
-		
+
 		model.addAttribute("recipe", recipeService.findById(id));
 		
 		return "recipe/show";
@@ -49,8 +53,7 @@ public class RecipeController {
 	public String saveRecipe(@ModelAttribute RecipeCommand command) { //now recipeCommand is our model attribute for view
 		
 		RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
-		
-		log.debug("I'm calling the fucking controller!");
+
 		
 		return "redirect:/recipe/" + savedCommand.getId() + "/show" ;
 	}//end saveRecipe
@@ -64,5 +67,18 @@ public class RecipeController {
 		return "redirect:/";
 		
 	}//end deleteRecipe
+	
+	@ResponseStatus(HttpStatus.NOT_FOUND)
+	@ExceptionHandler(NotFoundException.class)
+	public ModelAndView handleNotFound() {
+		
+		log.error("Handling not found exception");
+		
+		ModelAndView modelAndView = new ModelAndView();
+		
+		modelAndView.setViewName("404Error");
+		
+		return modelAndView;
+	}
 
 }
