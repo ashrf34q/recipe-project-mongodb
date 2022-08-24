@@ -85,7 +85,7 @@ public class IngredientController {
 		log.debug("Saved recipe " + savedCmd.getRecipeId());
 		log.debug("Saved Ingredient " + savedCmd.getId());
 		
-		return "redirect:/recipe/" + savedCmd.getRecipeId() + "/ingredient/" + savedCmd.getId() + "/show";
+		return "redirect:/recipe/" + savedCmd.getRecipeId() + "/ingredients";
 	} //end saveOrUpdate
 	
 	

@@ -10,6 +10,7 @@ import com.springframework.recipeproject.converters.IngredientCmdToIngredient;
 import com.springframework.recipeproject.converters.IngredientToIngredientCmd;
 import com.springframework.recipeproject.domain.Ingredients;
 import com.springframework.recipeproject.domain.Recipe;
+import com.springframework.recipeproject.exceptions.NotFoundException;
 import com.springframework.recipeproject.repositories.RecipeRepository;
 import com.springframework.recipeproject.repositories.UnitOfMeasureRepository;
 
@@ -44,7 +45,7 @@ public class IngredientServiceImpl implements IngredientService {
 				.filter(ingredient -> ingredient.getId().equals(ingredientId))
 				.map(ingredient -> ingrToIngrCmd.convert(ingredient)).findFirst();
 		
-		if(!ingredientCmdOpt.isPresent()) { log.error("Ingredient " + ingredientId + " not found!");   }
+		if(!ingredientCmdOpt.isPresent()) { throw new NotFoundException("Ingredient " + ingredientId + " not found!");   }
 		
 		return ingredientCmdOpt.get();
 		
