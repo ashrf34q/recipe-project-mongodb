@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -24,7 +25,8 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEvent>{
+@Profile("default")
+public class RecipeDataLoader implements ApplicationListener<ContextRefreshedEvent> {
 
 	private final RecipeRepository recipeRepository;
 	private final UnitOfMeasureRepository unitOfMeasureRepo;
