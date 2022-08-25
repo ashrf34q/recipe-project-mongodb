@@ -2,7 +2,7 @@ package com.springframework.recipeproject.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -53,49 +53,49 @@ public class IngredientServiceImplTest {
 	@Test
 	public void findByIngIdAndRecipeIdTest() throws Exception {
 		Recipe recipe = new Recipe();
-		recipe.setId(1L);
+		recipe.setId("1");
 		
 		Ingredients ingredient = new Ingredients();
-		ingredient.setId(1L);
+		ingredient.setId("1");
 		Ingredients ingredient2 = new Ingredients();
-		ingredient2.setId(2L);
+		ingredient2.setId("2");
 		Ingredients ingredient3 = new Ingredients();
-		ingredient3.setId(3L);
+		ingredient3.setId("3");
 		
 		recipe.addIngredient(ingredient);
 		recipe.addIngredient(ingredient2);
 		recipe.addIngredient(ingredient3);
 		Optional<Recipe> recipeOptional = Optional.of(recipe);
 		
-		when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+		when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 		
-		IngredientsCommand ingredientsCommand = ingredientService.findByIngIdAndRecipeId(1L, 3L);
+		IngredientsCommand ingredientsCommand = ingredientService.findByIngIdAndRecipeId("1", "3");
 		
 		assertEquals(Long.valueOf(3L), ingredientsCommand.getId());
 		assertEquals(Long.valueOf(1L), ingredientsCommand.getRecipeId());
-		verify(recipeRepository, times(1)).findById(anyLong());
+		verify(recipeRepository, times(1)).findById(anyString());
 	}
 	
 	@Test
 	public void saveIngredientCmdTest() throws Exception {
 		IngredientsCommand command = new IngredientsCommand();
-        command.setId(3L);
-        command.setRecipeId(2L);
+        command.setId("3");
+        command.setRecipeId("2");
 
         Optional<Recipe> recipeOptional = Optional.of(new Recipe());
 
         Recipe savedRecipe = new Recipe();
 		savedRecipe.addIngredient(new Ingredients());
-		savedRecipe.getIngredients().iterator().next().setId(3L);
+		savedRecipe.getIngredients().iterator().next().setId("3");
 		
-		when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+		when(recipeRepository.findById(anyString())).thenReturn(recipeOptional);
 		when(recipeRepository.save(any())).thenReturn(savedRecipe);
 		
 		IngredientsCommand savedCmd = ingredientService.saveIngredientCommand(command);
 		
 		assertEquals(command.getId(), savedCmd.getId());
 //		assertEquals(command.getRecipeId(), savedCmd.getRecipeId());
-		 verify(recipeRepository, times(1)).findById(anyLong());
+		 verify(recipeRepository, times(1)).findById(anyString());
 	     verify(recipeRepository, times(1)).save(any(Recipe.class));	
 	}
 	
@@ -104,17 +104,17 @@ public class IngredientServiceImplTest {
 	public void deleteIngrByIdTest() throws Exception {
 		Recipe recipe = new Recipe();
 		Ingredients ingredient = new Ingredients();
-		ingredient.setId(7L);
+		ingredient.setId("7");
 		recipe.addIngredient(ingredient);
 		ingredient.setRecipe(recipe);
 		Optional<Recipe> recipeOpt = Optional.of(recipe);
 		
-		when(recipeRepository.findById(anyLong())).thenReturn(recipeOpt);
+		when(recipeRepository.findById(anyString())).thenReturn(recipeOpt);
 		
-		ingredientService.deleteIngrById(2L, 7L);
+		ingredientService.deleteIngrById("2", "7");
 		
 		//then
-		verify(recipeRepository, times(1)).findById(anyLong());
+		verify(recipeRepository, times(1)).findById(anyString());
 		verify(recipeRepository, times(1)).save(any(Recipe.class));
 		
 	}

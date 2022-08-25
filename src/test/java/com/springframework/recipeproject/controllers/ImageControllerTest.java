@@ -2,7 +2,7 @@ package com.springframework.recipeproject.controllers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -50,16 +50,16 @@ public class ImageControllerTest {
     public void uploadImageTest() throws Exception {
         //given
         RecipeCommand command = new RecipeCommand();
-        command.setId(1L);
+        command.setId("1");
 
-        when(recipeService.findCommandById(anyLong())).thenReturn(command);
+        when(recipeService.findCommandById(anyString())).thenReturn(command);
 
         //when
         mockMvc.perform(get("/recipe/1/image"))
                 .andExpect(status().isOk())
                 .andExpect(model().attributeExists("recipe"));
 
-        verify(recipeService, times(1)).findCommandById(anyLong());
+        verify(recipeService, times(1)).findCommandById(anyString());
 
     }
 
@@ -74,14 +74,14 @@ public class ImageControllerTest {
                 .andExpect(header().string("Location", "/recipe/1/show"))
                 .andExpect(view().name("redirect:/recipe/1/show"));
 
-        verify(imageService, times(1)).saveImageFile(anyLong(), any());
+        verify(imageService, times(1)).saveImageFile(anyString(), any());
     }
     
     
     @Test
     public void renderImageFromDB() throws Exception {
     	RecipeCommand command = new RecipeCommand();
-    	command.setId(1L);
+    	command.setId("1");
     	
     	String s = "fake image";
     	Byte[] bytes = new Byte[s.getBytes().length];
@@ -93,7 +93,7 @@ public class ImageControllerTest {
     	
     	command.setImage(bytes);
     	
-    	when(recipeService.findCommandById(anyLong())).thenReturn(command);
+    	when(recipeService.findCommandById(anyString())).thenReturn(command);
     	
     	MockHttpServletResponse response = mockMvc.perform(get("/recipe/1/recipeImage"))
     			.andExpect(status().isOk())

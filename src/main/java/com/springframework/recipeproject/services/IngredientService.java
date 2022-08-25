@@ -4,10 +4,10 @@ import com.springframework.recipeproject.commands.IngredientsCommand;
 
 public interface IngredientService {
 
-	IngredientsCommand findByIngIdAndRecipeId(Long recipeId, Long ingredientId);
+	IngredientsCommand findByIngIdAndRecipeId(String recipeId, String ingredientId);
 
 	IngredientsCommand saveIngredientCommand(IngredientsCommand command);
 
-	void deleteIngrById(Long recipeId, Long ingrId);
+	void deleteIngrById(String recipeId, String ingrId);
 
 }

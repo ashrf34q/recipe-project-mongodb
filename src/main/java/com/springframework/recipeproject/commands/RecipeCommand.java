@@ -3,7 +3,6 @@ package com.springframework.recipeproject.commands;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
@@ -22,7 +21,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RecipeCommand {
 	
-	private Long id;
+	private String id;
 	
 	@NotBlank
 	@Size(min = 3, max = 255)

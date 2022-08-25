@@ -14,7 +14,7 @@ import com.springframework.recipeproject.domain.Category;
 
 public class CategoryCmdToCategoryTest {
 
-    public static final Long ID_VALUE = Long.valueOf(1l);
+    public static final String ID_VALUE = "1";
     public static final String DESCRIPTION = "description";
     CategoryCmdToCategory conveter;
 

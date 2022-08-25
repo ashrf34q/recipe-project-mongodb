@@ -33,7 +33,7 @@ public class IngredientServiceImpl implements IngredientService {
 	}
 
 	@Override
-	public IngredientsCommand findByIngIdAndRecipeId(Long recipeId, Long ingredientId) {
+	public IngredientsCommand findByIngIdAndRecipeId(String recipeId, String ingredientId) {
 
 		Optional<Recipe> tempRecipe = recipeRepository.findById(recipeId);
 		
@@ -109,7 +109,7 @@ public class IngredientServiceImpl implements IngredientService {
 	} //end saveIngredientCmd
 
 	@Override
-	public void deleteIngrById(Long recipeId, Long ingrId) {
+	public void deleteIngrById(String recipeId, String ingrId) {
 		log.debug("Deleting ingredient " + ingrId + " from recipe " + recipeId);
 		
 		Optional<Recipe> recipeOpt = recipeRepository.findById(recipeId);

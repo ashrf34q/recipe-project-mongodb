@@ -1,7 +1,7 @@
 package com.springframework.recipeproject.services;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -35,14 +35,14 @@ class ImageServiceImplTest {
 
 	@Test
 	void testSaveImageFile() throws Exception {
-		Long id = 2L;
+		String id = "2";
 		MultipartFile multipartFile = new MockMultipartFile("imagefile", "testing.txt", "text/plain", "Spring Framework Guru".getBytes());
 		
 		Recipe recipe = new Recipe();
 		recipe.setId(id);
 		Optional<Recipe> recipeOpt = Optional.of(recipe);
 		
-		when(recipeRepository.findById(anyLong())).thenReturn(recipeOpt);
+		when(recipeRepository.findById(anyString())).thenReturn(recipeOpt);
 		
 		ArgumentCaptor<Recipe> argumentCaptor = ArgumentCaptor.forClass(Recipe.class);
 		
@@ -50,7 +50,7 @@ class ImageServiceImplTest {
 		imageService.saveImageFile(id, multipartFile);
 		
 		//then
-		verify(recipeRepository, times(1)).findById(anyLong());
+		verify(recipeRepository, times(1)).findById(anyString());
 		verify(recipeRepository).save(argumentCaptor.capture());
 		Recipe savedRecipe = argumentCaptor.getValue();
 		assertEquals(multipartFile.getBytes().length, savedRecipe.getImage().length);

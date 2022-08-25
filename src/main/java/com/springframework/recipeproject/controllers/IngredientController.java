@@ -34,7 +34,7 @@ public class IngredientController {
 	public String listIngredients(@PathVariable String id, Model model) {
 		log.debug("Listing ingredients for recipe id: " + id);
 		
-		model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
+		model.addAttribute("recipe", recipeService.findCommandById(id));
 		return "recipe/ingredient/list";
 	}
 	
@@ -43,7 +43,7 @@ public class IngredientController {
 		
 		log.debug("Showing a specific ingredient based on its id");
 		
-		model.addAttribute("ingredient", ingredientService.findByIngIdAndRecipeId(Long.valueOf(recipeId), Long.valueOf(ingredientId)));
+		model.addAttribute("ingredient", ingredientService.findByIngIdAndRecipeId(recipeId, ingredientId));
 		
 		return "recipe/ingredient/show";
 	}
@@ -52,7 +52,7 @@ public class IngredientController {
 	@GetMapping("/recipe/{recipeId}/ingredient/{id}/update")
 	public String updateIngredient(@PathVariable String recipeId, @PathVariable String id, Model model) {
 		
-		model.addAttribute("ingredient", ingredientService.findByIngIdAndRecipeId(Long.valueOf(recipeId), Long.valueOf(id)));
+		model.addAttribute("ingredient", ingredientService.findByIngIdAndRecipeId(recipeId, id));
 		
 		model.addAttribute("uomList", uomService.listAllUoms());
 		
@@ -63,7 +63,7 @@ public class IngredientController {
 	@GetMapping("/recipe/{recipeId}/ingredient/new")
 	public String newRecipe(@PathVariable String recipeId, Model model) {
 		
-		RecipeCommand recipeCmd = recipeService.findCommandById(Long.valueOf(recipeId));
+		RecipeCommand recipeCmd = recipeService.findCommandById(recipeId);
 		
 		IngredientsCommand ingredientCmd = new IngredientsCommand();
 		ingredientCmd.setRecipeId(recipeCmd.getId());
@@ -92,7 +92,7 @@ public class IngredientController {
 	@GetMapping("/recipe/{recipeId}/ingredient/{ingrId}/delete")
 	public String deleteIngredient(@PathVariable String recipeId, @PathVariable String ingrId) {
 		
-		ingredientService.deleteIngrById(Long.valueOf(recipeId), Long.valueOf(ingrId));
+		ingredientService.deleteIngrById(recipeId, ingrId);
 		
 		return "redirect:/recipe/" + recipeId + "/ingredients";
 	}
